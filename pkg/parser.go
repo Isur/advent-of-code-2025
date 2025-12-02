@@ -15,3 +15,7 @@ func ParseToInt(str string) int {
 
 	return num
 }
+
+func ParseIntToString(num int) string {
+	return strconv.Itoa(num)
+}
