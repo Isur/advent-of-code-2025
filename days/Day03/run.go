@@ -2,6 +2,7 @@ package Day03
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/Isur/advent-of-code-2025/pkg"
 )
@@ -70,6 +71,11 @@ func find12(arr []int) int {
 }
 
 func part1(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 1)
+	}()
 	sum := 0
 	for _, line := range data {
 		arr := split(line)
@@ -80,6 +86,11 @@ func part1(data []string) int {
 }
 
 func part2(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 2)
+	}()
 	sum := 0
 	for _, line := range data {
 		arr := split(line)

@@ -2,6 +2,7 @@ package Day01
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/Isur/advent-of-code-2025/pkg"
 )
@@ -31,6 +32,11 @@ func changePosition(position int, direction bool, change int) int {
 }
 
 func part1(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 1)
+	}()
 	position := 50
 	zeros := 0
 	for _, line := range data {
@@ -85,6 +91,11 @@ func changePositionPart2(position int, direction bool, change int) (int, int) {
 }
 
 func part2(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 2)
+	}()
 	position := 50
 	zeros := 0
 	for _, line := range data {

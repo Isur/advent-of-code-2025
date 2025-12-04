@@ -1,6 +1,11 @@
 package Day04
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+
+	"github.com/Isur/advent-of-code-2025/pkg"
+)
 
 func Run(data []string) {
 	fmt.Println("Part 1:", part1(data)) // example = 13
@@ -44,6 +49,11 @@ func validatePosition(x, y int, data []string) bool {
 }
 
 func part1(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 1)
+	}()
 	total := 0
 	for i := range len(data) {
 		for j := range len(data[i]) {
@@ -57,6 +67,11 @@ func part1(data []string) int {
 }
 
 func part2(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 2)
+	}()
 	total := 0
 	curr := 0
 	for {

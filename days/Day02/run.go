@@ -3,6 +3,7 @@ package Day02
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/Isur/advent-of-code-2025/pkg"
 )
@@ -99,6 +100,11 @@ func validateRange(begin, end int, part2 bool) int {
 }
 
 func part1(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 1)
+	}()
 	invalidIds := 0
 	for _, line := range data {
 		splitted := strings.Split(line, "-")
@@ -110,6 +116,11 @@ func part1(data []string) int {
 }
 
 func part2(data []string) int {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		pkg.PrintTiming(elapsed, 2)
+	}()
 	invalidIds := 0
 	for _, line := range data {
 		splitted := strings.Split(line, "-")
