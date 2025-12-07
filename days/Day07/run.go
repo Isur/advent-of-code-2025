@@ -37,7 +37,7 @@ func part1(data []string) int {
 	splits := 0
 
 	for _, line := range data[1:] {
-		for beam, _ := range beamSet.GetMap() {
+		for beam := range beamSet.GetMap() {
 			if string(line[beam]) == "^" {
 				beamSet.Delete(beam)
 				splits++
@@ -70,7 +70,7 @@ func part2(data []string) int {
 	firstBeamPosition := findStart(data[0])
 
 	beamSet := pkg.CreateSet[int, *pkg.NumericalSet[int, int]](nil)
-	beamSet.Add(0, pkg.CreateNumericalSet[int, int](map[int]int{firstBeamPosition: 1}))
+	beamSet.Add(0, pkg.CreateNumericalSet(map[int]int{firstBeamPosition: 1}))
 
 	lvl := 0
 
@@ -80,7 +80,7 @@ func part2(data []string) int {
 			continue
 		}
 		found := false
-		for beam, _ := range beams[lvl].GetMap() {
+		for beam := range beams[lvl].GetMap() {
 
 			_, ok := beams[lvl+1]
 			if !ok {

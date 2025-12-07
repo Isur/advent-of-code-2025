@@ -26,7 +26,7 @@ func CreateSet[T comparable, V any](init map[T]V) *Set[T, V] {
 
 func CreateNumericalSet[T comparable, V Number](init map[T]V) *NumericalSet[T, V] {
 	return &NumericalSet[T, V]{
-		Set: CreateSet[T, V](init),
+		Set: CreateSet(init),
 	}
 }
 
@@ -61,10 +61,12 @@ func (s *Set[T, V]) GetSize() int {
 	return len(s.items)
 }
 
-func (s *NumericalSet[T, V]) AddOrSet(key T, value V) {
+func (s *NumericalSet[T, V]) AddOrSet(key T, value V) V {
 	if v, ok := s.items[key]; ok {
 		s.items[key] = v + value
 	} else {
 		s.items[key] = value
 	}
+
+	return s.items[key]
 }
