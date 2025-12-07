@@ -12,13 +12,13 @@ I am using go.
 :white_check_mark:
 :white_check_mark:
 :white_check_mark:
+:white_check_mark:
 :black_large_square:
 :black_large_square:
 :black_large_square:
 :black_large_square:
 :black_large_square:
-:black_large_square:
-6/12
+7/12
 
 - :black_large_square: - not done
 - :black_square_button: - one star
