@@ -31,20 +31,21 @@ func part1(data []string) int {
 	}()
 
 	firstBeam := findStart(data[0])
-	beamsMap := map[int]bool{firstBeam: true}
+	beamSet := pkg.CreateSet[int, bool](nil)
+	beamSet.Add(firstBeam, true)
 
 	splits := 0
 
 	for _, line := range data[1:] {
-		for beam, _ := range beamsMap {
+		for beam, _ := range beamSet.GetMap() {
 			if string(line[beam]) == "^" {
-				delete(beamsMap, beam)
+				beamSet.Delete(beam)
 				splits++
 				if beam > 0 {
-					beamsMap[beam-1] = true
+					beamSet.Add(beam-1, true)
 				}
 				if beam < len(line) {
-					beamsMap[beam+1] = true
+					beamSet.Add(beam+1, true)
 				}
 			}
 		}
@@ -68,49 +69,35 @@ func part2(data []string) int {
 	}()
 	firstBeamPosition := findStart(data[0])
 
-	beams := map[int]map[int]int{
-		0: {firstBeamPosition: 1},
-	}
+	beamSet := pkg.CreateSet[int, *pkg.NumericalSet[int, int]](nil)
+	beamSet.Add(0, pkg.CreateNumericalSet[int, int](map[int]int{firstBeamPosition: 1}))
 
 	lvl := 0
 
+	beams := beamSet.GetMap()
 	for _, line := range data[1:] {
 		if isEmpty(line) {
 			continue
 		}
 		found := false
-		for beam, _ := range beams[lvl] {
+		for beam, _ := range beams[lvl].GetMap() {
 
 			_, ok := beams[lvl+1]
 			if !ok {
-				beams[lvl+1] = map[int]int{}
+				beams[lvl+1] = pkg.CreateNumericalSet[int, int](nil)
 			}
 
+			c := beams[lvl].GetMap()[beam]
 			if string(line[beam]) == "^" {
 				found = true
 				if beam > 0 {
-					_, ok := beams[lvl+1][beam-1]
-					if ok {
-						beams[lvl+1][beam-1] += beams[lvl][beam]
-					} else {
-						beams[lvl+1][beam-1] = beams[lvl][beam]
-					}
+					beams[lvl+1].AddOrSet(beam-1, c)
 				}
 				if beam < len(line) {
-					_, ok := beams[lvl+1][beam+1]
-					if ok {
-						beams[lvl+1][beam+1] += beams[lvl][beam]
-					} else {
-						beams[lvl+1][beam+1] = beams[lvl][beam]
-					}
+					beams[lvl+1].AddOrSet(beam+1, c)
 				}
 			} else {
-				_, ok := beams[lvl+1][beam]
-				if ok {
-					beams[lvl+1][beam] += beams[lvl][beam]
-				} else {
-					beams[lvl+1][beam] = beams[lvl][beam]
-				}
+				beams[lvl+1].AddOrSet(beam, c)
 			}
 		}
 
@@ -120,7 +107,7 @@ func part2(data []string) int {
 	}
 
 	sum := 0
-	for _, v := range beams[len(beams)-1] {
+	for _, v := range beamSet.GetMap()[beamSet.GetSize()-1].GetMap() {
 		sum += v
 	}
 
